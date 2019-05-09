@@ -1,2 +1,3 @@
-# dw-metadata
-Object model for standardising the structure of metadata applicable to populating a data warehouse.
+# dp-metadata
+
+Object model for standardising the structure of metadata applicable to data pipelines.
