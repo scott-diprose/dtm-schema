@@ -1,13 +1,14 @@
-object_mapping:
+objectMapping:
+  title: m_200_MIDAS_INSTITUTION_VW_SAT_INSTITUTION
   extension:
-    - AzP_DV:
-        package_name: m_200_MIDAS_INSTITUTION_VW_SAT_INSTITUTION
+    - AzP-DV:
+        packageName: m_200_MIDAS_INSTITUTION_VW_SAT_INSTITUTION
   source:
-    data_store:
-      connection_key: HSTG
-      connection_description: EDW History Staging Area
-      connection_string: Provider=odbc,etc.
-    data_object:
+    dataStore:
+      connectionKey: HSTG
+      connectionDescription: EDW History Staging Area
+      connectionString: Provider=odbc,etc.
+    dataObject:
       sql: |
         SELECT A.*,
           COALESCE(SAT2.LKP_OMD_HASH_FULL_RECORD,'N/A') AS LKP_OMD_HASH_FULL_RECORD
@@ -152,35 +153,35 @@ object_mapping:
                         A.INSTITUTION_SK=SAT2.INSTITUTION_SK
             WHERE SAT.INSTITUTION_SK IS NULL
   target:
-    data_store:
-      connection_key: INT
-      connection_description: EDW Integration Area
-      connection_string: Provider=odbc,etc.
-    data_object:
-      object_schema: dbo
-      object_name: SAT_INSTITUTION
+    dataStore:
+      connectionKey: INT
+      connectionDescription: EDW Integration Area
+      connectionString: Provider=odbc,etc.
+    dataObject:
+      objectSchema: dbo
+      objectName: SAT_INSTITUTION
   mappings:
     - source:
-        column_name: INSTITUTION_SK
+        columnName: INSTITUTION_SK
       target:
-        column_name: INSTITUTION_SK
+        columnName: INSTITUTION_SK
     - source:
-        column_name: OMD_EFFECTIVE_DATETIME
+        columnName: OMD_EFFECTIVE_DATETIME
       target:
-        column_name: OMD_EFFECTIVE_DATETIME
+        columnName: OMD_EFFECTIVE_DATETIME
     - source:
-        column_name: INSTITUTION_NAME
+        columnName: INSTITUTION_NAME
       target:
-        column_name: INSTITUTION_NAME
+        columnName: INSTITUTION_NAME
     - source:
-        column_name: RATING
+        columnName: RATING
       target:
-        column_name: RATING
+        columnName: RATING
     - source:
-        column_name: SEARCH_NAME
+        columnName: SEARCH_NAME
       target:
-        column_name: SEARCH_NAME
+        columnName: SEARCH_NAME
     - source:
-        column_name: STATUS
+        columnName: STATUS
       target:
-        column_name: STATUS
+        columnName: STATUS
