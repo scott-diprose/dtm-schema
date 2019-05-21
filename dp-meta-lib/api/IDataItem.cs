@@ -8,8 +8,8 @@ namespace DPMetadata
   public interface IDataItem
   {
     string ColumnName { get; set; }
-    string DataItemType { get; }
-    IDataType DataType { get; set; }
+    string DataItemType { get; } // TODO: default to 'column'
+    IDataType DataType { get; set; } // TODO: optional (support: not required / unknown)
   }
 
   public interface IDataColumn: IDataItem {}
