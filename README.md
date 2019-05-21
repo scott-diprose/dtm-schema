@@ -1,3 +1,8 @@
+# dp-metadata
+
+Metadata to describes processes within a data pipeline.
+
+
 # dp-metadata.net
 
 Object model for standardising the structure of metadata applicable to data pipelines, implemented in .NET Core.
