@@ -21,7 +21,7 @@ objectMapping:
       objectName: SAT_INSTITUTION
   mappings:
     - source:
-        calculation: INSTITUTION_SK
+        calculationName: INSTITUTION_SK
         code: |
           CONVERT(CHAR(32), HASHBYTES('MD5',
                                   ISNULL(RTRIM(CONVERT(NVARCHAR(100), [INSTITUTION_ID])),'NA') + '|'
