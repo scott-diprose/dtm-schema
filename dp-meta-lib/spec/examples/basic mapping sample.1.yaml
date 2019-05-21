@@ -16,7 +16,7 @@ dataObjectMapping:
     dataObject:
       objectSchema: dbo
       objectName: SAT_INSTITUTION
-  mappings:
+  dataObjectMappings:
     - sourceDataItem:
         columnName: INSTITUTION_SK
         dataItemType: calculation
