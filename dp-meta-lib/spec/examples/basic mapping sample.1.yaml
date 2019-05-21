@@ -1,0 +1,45 @@
+object_mapping:
+  extension:
+    - AzP_DV:
+        package_name: m_200_MIDAS_INSTITUTION_VW_SAT_INSTITUTION
+  source:
+    data_store:
+      connection_key: HSTG
+      connection_description: EDW History Staging Area
+      connection_string: Provider=odbc,etc.
+    data_object:
+      object_schema: dbo
+      object_name: HSTG_MIDAS_INSTITUTION_VW
+  target:
+    data_store:
+      connection_key: INT
+      connection_description: EDW Integration Area
+      connection_string: Provider=odbc,etc.
+    data_object:
+      object_schema: dbo
+      object_name: SAT_INSTITUTION
+  mappings:
+    - source:
+        column_name: INSTITUTION_SK
+      target:
+        column_name: INSTITUTION_SK
+    - source:
+        column_name: OMD_EFFECTIVE_DATETIME
+      target:
+        column_name: OMD_EFFECTIVE_DATETIME
+    - source:
+        column_name: INSTITUTION_NAME
+      target:
+        column_name: INSTITUTION_NAME
+    - source:
+        column_name: RATING
+      target:
+        column_name: RATING
+    - source:
+        column_name: SEARCH_NAME
+      target:
+        column_name: SEARCH_NAME
+    - source:
+        column_name: STATUS
+      target:
+        column_name: STATUS

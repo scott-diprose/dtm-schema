@@ -1,0 +1,42 @@
+data_object:
+  data_store:
+    connection_key: HSTG
+    connection_description: EDW History Staging Area
+    connection_string: Provider=odbc,etc.
+  data_object:
+    object_schema: dbo
+    object_name: HSTG_MIDAS_PROVIDER_MASTER_VW
+  data_items:
+    key_columns:
+      - column_name: PROVIDER_ID
+        data_type: int
+        max_length: 4
+      - column_name: OMD_INSERT_DATETIME
+        data_type: datetime2(7)
+      - column_name: OMD_ROW_NUMBER
+        data_type: int
+        max_length: 4
+    columns:
+      - column_name: INSTITUTION_NAME
+        data_type: nvarchar
+        max_length: 200
+      - column_name: RATING
+        data_type: nvarchar
+        max_length: 200
+      - column_name: SEARCH_NAME
+        data_type: nvarchar
+        max_length: 200
+      - column_name: STATUS
+        data_type: nvarchar
+        max_length: 200
+    calculations:
+      - column_name: INSTITUTION_SK
+        data_type: nvarchar
+        max_length: 200
+        code: |
+          CONVERT(CHAR(32), HASHBYTES('MD5',
+                                  ISNULL(RTRIM(CONVERT(NVARCHAR(100), [INSTITUTION_ID])),'NA') + '|'
+                                  ), 2)
+      - column_name: OMD_EFFECTIVE_DATETIME
+        data_type: datetime2(7)
+        code: dateadd(ms, OMD_ROW_NUMBER, OMD_INSERT_DATETIME)
