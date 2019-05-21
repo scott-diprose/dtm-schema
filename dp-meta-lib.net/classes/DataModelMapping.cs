@@ -2,7 +2,7 @@
 using YamlDotNet.Serialization;
 using Newtonsoft.Json;
 
-namespace DPMetadata
+namespace DPMetaLib
 {
   /*
   Interface: ModelMapping

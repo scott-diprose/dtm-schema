@@ -1,4 +1,4 @@
-// namespace DPMetaLib
+// namespace DPMetadata
 // {
 //   public struct DataCalculation : IDataCalculation
 //   {

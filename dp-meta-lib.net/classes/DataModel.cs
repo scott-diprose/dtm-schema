@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.Data.Odbc;
 using System.Collections.Generic;
 
-namespace DPMetadata
+namespace DPMetaLib
 {
   /*
   Purpose:
