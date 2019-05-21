@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DPMetaLib
+namespace DPMetadata
 {
   /*
   Purpose: Details how data elements relate between two different data models. Including

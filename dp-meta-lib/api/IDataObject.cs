@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DPMetaLib
+namespace DPMetadata
 {
   public interface IDataObject
   {

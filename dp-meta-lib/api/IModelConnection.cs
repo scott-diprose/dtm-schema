@@ -1,4 +1,4 @@
-﻿namespace DPMetaLib
+﻿namespace DPMetadata
 {
   /*
   Purpose: Stores the details for connecting to a data model in order to either extract or load data.
