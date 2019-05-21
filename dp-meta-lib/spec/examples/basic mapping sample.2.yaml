@@ -1,4 +1,4 @@
-objectMapping:
+dataObjectMapping:
   name: m_200_MIDAS_INSTITUTION_VW_SAT_INSTITUTION
   extensions:
     - schemaName: AzP-DV
@@ -151,34 +151,34 @@ objectMapping:
                       ON
                         A.INSTITUTION_SK=SAT2.INSTITUTION_SK
             WHERE SAT.INSTITUTION_SK IS NULL
-  target:
+  targetDataItem:
     dataStore:
       connectionKey: INT
     dataObject:
       objectSchema: dbo
       objectName: SAT_INSTITUTION
-  mappings:
-    - source:
+  dataObjectMappings:
+    - sourceDataItem:
         columnName: INSTITUTION_SK
-      target:
+      targetDataItem:
         columnName: INSTITUTION_SK
-    - source:
+    - sourceDataItem:
         columnName: OMD_EFFECTIVE_DATETIME
-      target:
+      targetDataItem:
         columnName: OMD_EFFECTIVE_DATETIME
-    - source:
+    - sourceDataItem:
         columnName: INSTITUTION_NAME
-      target:
+      targetDataItem:
         columnName: INSTITUTION_NAME
-    - source:
+    - sourceDataItem:
         columnName: RATING
-      target:
+      targetDataItem:
         columnName: RATING
-    - source:
+    - sourceDataItem:
         columnName: SEARCH_NAME
-      target:
+      targetDataItem:
         columnName: SEARCH_NAME
-    - source:
+    - sourceDataItem:
         columnName: STATUS
-      target:
+      targetDataItem:
         columnName: STATUS
