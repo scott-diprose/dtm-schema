@@ -6,7 +6,6 @@ objectMapping:
         targetType: Satellite
   source:
     dataStore:
-      modelName: EDW History Staging Area
       connectionKey: HSTG
     dataObject:
       sql: |
@@ -154,7 +153,6 @@ objectMapping:
             WHERE SAT.INSTITUTION_SK IS NULL
   target:
     dataStore:
-      modelName: EDW Integration Area
       connectionKey: INT
     dataObject:
       objectSchema: dbo
