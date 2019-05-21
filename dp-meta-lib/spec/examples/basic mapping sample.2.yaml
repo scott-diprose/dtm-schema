@@ -163,37 +163,25 @@ objectMapping:
   mappings:
     - source:
         columnName: INSTITUTION_SK
-        dataItemType: column
       target:
         columnName: INSTITUTION_SK
-        dataItemType: column
     - source:
         columnName: OMD_EFFECTIVE_DATETIME
-        dataItemType: column
       target:
         columnName: OMD_EFFECTIVE_DATETIME
-        dataItemType: column
     - source:
         columnName: INSTITUTION_NAME
-        dataItemType: column
       target:
         columnName: INSTITUTION_NAME
-        dataItemType: column
     - source:
         columnName: RATING
-        dataItemType: column
       target:
         columnName: RATING
-        dataItemType: column
     - source:
         columnName: SEARCH_NAME
-        dataItemType: column
       target:
         columnName: SEARCH_NAME
-        dataItemType: column
     - source:
         columnName: STATUS
-        dataItemType: column
       target:
         columnName: STATUS
-        dataItemType: column
