@@ -7,7 +7,7 @@ namespace DPMetadata
     /***
     Purpose: The parent object collection, which includes source and target connections details.
     ***/
-    IModelMapping ModelMapping
+    IDataModelMapping ModelMapping
     {
       get;
     }

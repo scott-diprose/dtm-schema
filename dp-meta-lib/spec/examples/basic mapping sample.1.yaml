@@ -6,17 +6,15 @@ objectMapping:
         targetType: Satellite
   source:
     dataStore:
+      modelName: EDW History Staging Area
       connectionKey: HSTG
-      connectionDescription: EDW History Staging Area
-      connectionString: Provider=odbc,etc.
     dataObject:
       objectSchema: dbo
       objectName: HSTG_MIDAS_INSTITUTION_VW
   target:
     dataStore:
+      modelName: EDW Integration Area
       connectionKey: INT
-      connectionDescription: EDW Integration Area
-      connectionString: Provider=odbc,etc.
     dataObject:
       objectSchema: dbo
       objectName: SAT_INSTITUTION
