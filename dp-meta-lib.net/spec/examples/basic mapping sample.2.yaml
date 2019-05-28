@@ -1,9 +1,8 @@
 dataObjectMapping:
   name: m_200_MIDAS_INSTITUTION_VW_SAT_INSTITUTION
-  extensions:
-    - schemaName: AzP-DV
-      properties:
-        targetType: Satellite
+  ext:
+    AzP-DV:
+      targetType: Satellite
   source:
     dataStore:
       connectionKey: HSTG

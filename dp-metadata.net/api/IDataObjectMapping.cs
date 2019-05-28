@@ -7,56 +7,21 @@ namespace DPMetadata
     /***
     Purpose: The parent object collection, which includes source and target connections details.
     ***/
-    IDataModelMapping ModelMapping
-    {
-      get;
-    }
+    IDataModelMapping ModelMapping { get; }
 
     /***
     Purpose: Either object or code
     ***/
-    IDataObject Source
-    // ICodeObject Source
-    {
-      get;
-    }
-
-    IDataObject Target
-    {
-      get;
-    }
-
-    List<IDataItemMapping> MappedDataItems
-    {
-      get;
-    }
-
+    IDataObject Source { get; }
+    // ICodeObject Source { get; }
+    IDataObject Target { get; }
+    List<IDataItemMapping> MappedDataItems { get; }
 
     /*** Extension properties ***/
-
-    string PackageName
-    {
-      get;
-    }
-
-    string TargetConnectionName
-    {
-      get;
-    }
-
-    string SourceConnectionName
-    {
-      get;
-    }
-
-    string ExtractSQL
-    {
-      get;
-    }
-
-    string EndDatingSQL
-    {
-      get;
-    }
+    string PackageName { get; }
+    string TargetConnectionName { get; }
+    string SourceConnectionName { get; }
+    string ExtractSQL { get; }
+    string EndDatingSQL { get; }
   }
 }
