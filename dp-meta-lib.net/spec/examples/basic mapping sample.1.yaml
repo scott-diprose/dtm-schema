@@ -2,6 +2,7 @@ dataObjectMapping:
   name: m_200_MIDAS_INSTITUTION_VW_SAT_INSTITUTION
   ext:
     AzP-DV:
+      extSchema: example.com/schemas/data_vault/mappings.json
       targetType: Satellite
   source:
     dataStore:
