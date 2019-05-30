@@ -1,6 +1,0 @@
-{
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "dv-core",
-  "description": "Covers the standard definitions of text book Data Vault."
-
-}
