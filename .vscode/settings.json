@@ -1,0 +1,10 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "./spec/*.json"
+      ],
+      "url": "./schemas/dp-metadata.json"
+    }
+  ]
+}
