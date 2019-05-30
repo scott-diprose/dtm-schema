@@ -1,0 +1,43 @@
+tags:
+  - "source compare"
+benchmarkRowset:
+  connection_key: MIDAS
+  SQL: |
+    select PROVIDER_ID
+        , INSTITUTION_NAME
+    from WORLDKING.PROVIDER_MASTER
+  key_columns:
+    - column_name: PROVIDER_ID
+      data_type: int
+targetRowset:
+  connection_key: INT
+  SQL: |
+    select INSTITUTION_ID
+        , INSTITUTION_NAME
+    from (
+        select INSTITUTION_ID
+            , INSTITUTION_NAME
+            , row_number() over (partition by INSTITUTION_SK order by OMD_INSERT_DATETIME desc) as rn
+        from dbo.SAT_INSTITUTION
+        ) allrows
+    where rn = 1
+  key_columns:
+    - column_name: INSTITUTION_ID
+      data_type: nvarchar
+      max_length: 200
+mapped_columns:
+  - source:
+      column_name: PROVIDER_ID
+      data_type: int
+    target:
+      column_name: INSTITUTION_ID
+      data_type: nvarchar
+      max_length: 200
+  - source:
+      column_name: INSTITUTION_NAME
+      data_type: nvarchar
+      max_length: 200
+    target:
+      column_name: INSTITUTION_NAME
+      data_type: nvarchar
+      max_length: 200
