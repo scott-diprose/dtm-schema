@@ -1,4 +1,4 @@
 *.bak
 *.zip
-spec/examples/archive
+spec/archive
 schemas/example extensions
