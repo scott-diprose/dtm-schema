@@ -1,0 +1,82 @@
+{
+  "dataSetMapping": {
+    "name": "m_200_MIDAS_INSTITUTION_VW_SAT_INSTITUTION",
+    "ext": {
+      "Core-DV": {
+        "extSchema": "example.com/schemas/data_vault/mappings.json",
+        "targetType": "Satellite"
+      }
+    },
+    "source": {
+      "dataStore": {
+        "connectionKey": "HSTG"
+      },
+      "dataObject": {
+        "objectSchema": "dbo",
+        "objectName": "HSTG_MIDAS_INSTITUTION_VW"
+      }
+    },
+    "target": {
+      "dataStore": {
+        "connectionKey": "INT"
+      },
+      "dataObject": {
+        "objectSchema": "dbo",
+        "objectName": "SAT_INSTITUTION"
+      }
+    },
+    "mappedDataItems": [
+      {
+        "sourceDataItem": {
+          "columnName": "INSTITUTION_SK",
+          "dataItemType": "calculation",
+          "language": "T-SQL",
+          "code": "CONVERT(CHAR(32), HASHBYTES('MD5',\n                        ISNULL(RTRIM(CONVERT(NVARCHAR(100), [INSTITUTION_ID])), 'NA') + '|'\n                        ), 2)\n"
+        },
+        "targetDataItem": {
+          "columnName": "INSTITUTION_SK"
+        }
+      },
+      {
+        "sourceDataItem": {
+          "columnName": "OMD_EFFECTIVE_DATETIME"
+        },
+        "targetDataItem": {
+          "columnName": "OMD_EFFECTIVE_DATETIME"
+        }
+      },
+      {
+        "sourceDataItem": {
+          "columnName": "INSTITUTION_NAME"
+        },
+        "targetDataItem": {
+          "columnName": "INSTITUTION_NAME"
+        }
+      },
+      {
+        "sourceDataItem": {
+          "columnName": "RATING"
+        },
+        "targetDataItem": {
+          "columnName": "RATING"
+        }
+      },
+      {
+        "sourceDataItem": {
+          "columnName": "SEARCH_NAME"
+        },
+        "targetDataItem": {
+          "columnName": "SEARCH_NAME"
+        }
+      },
+      {
+        "sourceDataItem": {
+          "columnName": "STATUS"
+        },
+        "targetDataItem": {
+          "columnName": "STATUS"
+        }
+      }
+    ]
+  }
+}

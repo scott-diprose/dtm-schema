@@ -1,4 +1,4 @@
-dataObjectMapping:
+dataSetMapping:
   name: m_200_MIDAS_INSTITUTION_VW_SAT_INSTITUTION
   ext:
     Core-DV:
@@ -10,13 +10,13 @@ dataObjectMapping:
     dataObject:
       objectSchema: dbo
       objectName: HSTG_MIDAS_INSTITUTION_VW
-  targetDataItem:
+  target:
     dataStore:
       connectionKey: INT
     dataObject:
       objectSchema: dbo
       objectName: SAT_INSTITUTION
-  dataObjectMappings:
+  mappedDataItems:
     - sourceDataItem:
         columnName: INSTITUTION_SK
         dataItemType: calculation
