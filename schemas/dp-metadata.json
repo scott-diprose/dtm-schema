@@ -107,12 +107,12 @@
       "title": "",
       "description": "",
       "required": [
-        "columnName",
+        "calculationName",
         "language",
         "code"
       ],
       "properties": {
-        "columnName": {
+        "calculationName": {
           "type": "string",
           "title": "",
           "description": "Unique name which identifies the resulting column.",
@@ -136,52 +136,20 @@
             "(column1 + column2) / 2"
           ]
         }
-      }
-    },
-    "dataItem": {
-      "type": "object",
-      "$id": "#/definitions/dataItem",
-      "title": "",
-      "description": "",
-      "properties": {
-        "dataItemType": {
-          "type": "string",
-          "title": "",
-          "default": "dataColumn",
-          "enum": [
-            "dataObject",
-            "dataQuery"
-          ]
-        },
-        "dataObject": {
-          "$ref": "#/definitions/dataObject"
-        },
-        "dataQuery": {
-          "$ref": "#/definitions/dataQuery"
-        }
-      },
-      "required": [
-        "dataSetType"
-      ],
-      "oneOf": [
-        {
-          "required": [
-            "dataObject"
-          ]
-        },
-        {
-          "required": [
-            "dataQuery"
-          ]
-        }
-      ],
-      "not": {
-        "required": [
-          "dataObject",
-          "dataQuery"
-        ]
       },
       "additionalProperties": false
+    },
+    "dataItem": {
+      "$id": "#/definitions/dataItem",
+      "title": "Either a columnDefinition or calculationDefinition",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/columnDefinition"
+        },
+        {
+          "$ref": "#/definitions/calculationDefinition"
+        }
+      ]
     },
     "dataQuery": {
       "$id": "#/definitions/dataQuery",
@@ -220,7 +188,8 @@
             "uniqueItems": true
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "dataObject": {
       "$id": "#/definitions/dataObject",
@@ -258,52 +227,19 @@
           }
         }
       },
-      "additionalProperties": true
+      "additionalProperties": false
     },
     "dataSet": {
-      "type": "object",
       "$id": "#/definitions/dataSet",
-      "title": "",
-      "description": "",
-      "properties": {
-        "dataSetType": {
-          "type": "string",
-          "title": "",
-          "default": "dataObject",
-          "enum": [
-            "dataObject",
-            "dataQuery"
-          ]
-        },
-        "dataObject": {
-          "$ref": "#/definitions/dataObject"
-        },
-        "dataQuery": {
-          "$ref": "#/definitions/dataQuery"
-        }
-      },
-      "required": [
-        "dataSetType"
-      ],
+      "title": "Either a dataObject or dataQuery",
       "oneOf": [
         {
-          "required": [
-            "dataObject"
-          ]
+          "$ref": "#/definitions/dataObject"
         },
         {
-          "required": [
-            "dataQuery"
-          ]
+          "$ref": "#/definitions/dataQuery"
         }
-      ],
-      "not": {
-        "required": [
-          "dataObject",
-          "dataQuery"
-        ]
-      },
-      "additionalProperties": false
+      ]
     },
     "dataSetMapping": {
       "$id": "#/properties/dataSetMapping",
@@ -326,17 +262,14 @@
         },
         "extension": {
           "description": "Extention point for adding custom properties for specific implementations or plugin libraries.",
-          "type": "array",
-          "items": {
-            "type": "object"
-          },
+          "type": "object",
           "minItems": 0,
           "uniqueItems": true
         },
         "source": {
           "$id": "#/properties/dataSetMapping/properties/source",
           "type": "object",
-          "title": "Identifies the data storage which from which to obtain the source data set.",
+          "title": "Identifies the data storage from which to obtain the source data set.",
           "required": [
             "dataStore",
             "dataSet"
@@ -382,23 +315,38 @@
             "title": "",
             "required": [
               "sourceDataItem",
-              "targetDataItem"
+              "targetColumn"
             ],
             "properties": {
               "sourceDataItem": {
-                "$id": "#/properties/mappdedDataItems/items/properties/sourceDataItem",
                 "$ref": "#/definitions/dataItem",
-                "title": "data element mapped from in the source",
+                "title": "The source data element mapped from"
+              },
+              "sourceDataItemExcluded": {
+                "$id": "#/definitions/dataSetMapping/properties/mappedDataItems/items/properties/sourceDataItem",
+                "oneOf": [
+                  {
+                    "$ref": "#/definitions/columnDefinition"
+                  },
+                  {
+                    "$ref": "#/definitions/calculationDefinition"
+                  }
+                ],
+                "title": "The source data element mapped from",
                 "examples": [
-                  "SaleAmount"
+                  {
+                    "columnName": "SaleAmount"
+                  }
                 ]
               },
-              "targetDataItem": {
-                "$id": "#/properties/mappdedDataItems/items/properties/targetDataItem",
-                "$ref": "#/definitions/dataItem",
-                "title": "data element mapped to in the destination",
+              "targetColumn": {
+                "$id": "#/definitions/dataSetMapping/properties/mappedDataItems/items/properties/targetColumn",
+                "$ref": "#/definitions/columnDefinition",
+                "title": "The destination data element mapped to",
                 "examples": [
-                  "LineItemAmount"
+                  {
+                    "columnName": "LineItemAmount"
+                  }
                 ]
               }
             }

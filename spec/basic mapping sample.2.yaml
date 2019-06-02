@@ -7,8 +7,7 @@ dataSetMapping:
   source:
     dataStore:
       connectionKey: HSTG
-    dataObject:
-      objectType: query
+    dataSet:
       language: T-SQL
       code: |
         select src.*
@@ -38,33 +37,33 @@ dataSetMapping:
   mappedDataItems:
     - sourceDataItem:
         columnName: SALE_LINE_ITEM_SK
-      targetDataItem:
+      targetColumn:
         columnName: SALE_LINE_ITEM_SK
     - sourceDataItem:
         columnName: OMD_CHANGE_DATETIME
-      targetDataItem:
+      targetColumn:
         columnName: OMD_CHANGE_DATETIME
     - sourceDataItem:
         columnName: OMD_DELETED_RECORD
-      targetDataItem:
+      targetColumn:
         columnName: OMD_DELETED_RECORD
     - sourceDataItem:
         columnName: COMPONENT_TYPE_ID
-      targetDataItem:
+      targetColumn:
         columnName: SRCSYS_COMPONENT_TYPE_ID
     - sourceDataItem:
         columnName: CHARGE_AMOUNT
-      targetDataItem:
+      targetColumn:
         columnName: AMOUNT_CONTRIBUTED
     - sourceDataItem:
         columnName: OMD_INSERT_DATETIME
-      targetDataItem:
+      targetColumn:
         columnName: OMD_INSERT_DATETIME
     - sourceDataItem:
         columnName: OMD_INSERT_MODULE_INSTANCE_ID
-      targetDataItem:
+      targetColumn:
         columnName: OMD_INSERT_MODULE_INSTANCE_ID
     - sourceDataItem:
         columnName: OMD_CHANGE_KEY
-      targetDataItem:
+      targetColumn:
         columnName: OMD_CHANGE_KEY

@@ -1,7 +1,7 @@
 {
   "dataSetMapping": {
     "name": "m_200_MIDAS_INSTITUTION_VW_SAT_INSTITUTION",
-    "ext": {
+    "extension": {
       "Core-DV": {
         "extSchema": "example.com/schemas/data_vault/mappings.json",
         "targetType": "Satellite"
@@ -11,7 +11,7 @@
       "dataStore": {
         "connectionKey": "HSTG"
       },
-      "dataObject": {
+      "dataSet": {
         "objectSchema": "dbo",
         "objectName": "HSTG_MIDAS_INSTITUTION_VW"
       }
@@ -28,12 +28,11 @@
     "mappedDataItems": [
       {
         "sourceDataItem": {
-          "columnName": "INSTITUTION_SK",
-          "dataItemType": "calculation",
+          "calculationName": "INSTITUTION_SK",
           "language": "T-SQL",
           "code": "CONVERT(CHAR(32), HASHBYTES('MD5',\n                        ISNULL(RTRIM(CONVERT(NVARCHAR(100), [INSTITUTION_ID])), 'NA') + '|'\n                        ), 2)\n"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "INSTITUTION_SK"
         }
       },
@@ -41,7 +40,7 @@
         "sourceDataItem": {
           "columnName": "OMD_EFFECTIVE_DATETIME"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "OMD_EFFECTIVE_DATETIME"
         }
       },
@@ -49,7 +48,7 @@
         "sourceDataItem": {
           "columnName": "INSTITUTION_NAME"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "INSTITUTION_NAME"
         }
       },
@@ -57,7 +56,7 @@
         "sourceDataItem": {
           "columnName": "RATING"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "RATING"
         }
       },
@@ -65,7 +64,7 @@
         "sourceDataItem": {
           "columnName": "SEARCH_NAME"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "SEARCH_NAME"
         }
       },
@@ -73,7 +72,7 @@
         "sourceDataItem": {
           "columnName": "STATUS"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "STATUS"
         }
       }

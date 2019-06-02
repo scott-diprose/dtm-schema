@@ -11,8 +11,7 @@
       "dataStore": {
         "connectionKey": "HSTG"
       },
-      "dataObject": {
-        "objectType": "query",
+      "dataSet": {
         "language": "T-SQL",
         "code": "select src.*\nfrom    (\n        select SALE_COMPONENT.OMD_RECORD_SOURCE + N'_' + convert(nvarchar(100), SALE_COMPONENT.SALE_COMPONENT_ID) as SALE_LINE_ITEM_SK,\n            SALE_COMPONENT.OMD_CHANGE_DATETIME,\n            case when SALE_COMPONENT.OMD_CDC_OPERATION = 'DELETED' then 'Y' else 'N' end as OMD_DELETED_RECORD,\n            SALE_COMPONENT.COMPONENT_TYPE_ID,\n            SALE_COMPONENT.CHANGE_AMOUNT,\n            SALE_COMPONENT.OMD_INSERT_DATETIME,\n            SALE_COMPONENT.OMD_INSERT_MODULE_INSTANCE_ID,\n            SALE_COMPONENT.OMD_CHANGE_KEY\n        from EDW_Staging_Area.dbo.SRCSYS_SALE_COMPONENT SALE_COMPONENT\n        ) as src\nwhere not exists (\n        select null\n        from EDW_Integration_Layer.dbo.SAT_SALE_LINE_ITEM\n        where SAT_SALE_LINE_ITEM.SALE_LINE_ITEM_SK = src.SALE_LINE_ITEM_SK\n            and SAT_SALE_LINE_ITEM.OMD_CHANGE_KEY = src.OMD_CHANGE_KEY\n        );\n"
       }
@@ -31,7 +30,7 @@
         "sourceDataItem": {
           "columnName": "SALE_LINE_ITEM_SK"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "SALE_LINE_ITEM_SK"
         }
       },
@@ -39,7 +38,7 @@
         "sourceDataItem": {
           "columnName": "OMD_CHANGE_DATETIME"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "OMD_CHANGE_DATETIME"
         }
       },
@@ -47,7 +46,7 @@
         "sourceDataItem": {
           "columnName": "OMD_DELETED_RECORD"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "OMD_DELETED_RECORD"
         }
       },
@@ -55,7 +54,7 @@
         "sourceDataItem": {
           "columnName": "COMPONENT_TYPE_ID"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "SRCSYS_COMPONENT_TYPE_ID"
         }
       },
@@ -63,7 +62,7 @@
         "sourceDataItem": {
           "columnName": "CHARGE_AMOUNT"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "AMOUNT_CONTRIBUTED"
         }
       },
@@ -71,7 +70,7 @@
         "sourceDataItem": {
           "columnName": "OMD_INSERT_DATETIME"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "OMD_INSERT_DATETIME"
         }
       },
@@ -79,7 +78,7 @@
         "sourceDataItem": {
           "columnName": "OMD_INSERT_MODULE_INSTANCE_ID"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "OMD_INSERT_MODULE_INSTANCE_ID"
         }
       },
@@ -87,7 +86,7 @@
         "sourceDataItem": {
           "columnName": "OMD_CHANGE_KEY"
         },
-        "targetDataItem": {
+        "targetColumn": {
           "columnName": "OMD_CHANGE_KEY"
         }
       }
