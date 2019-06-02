@@ -1,51 +1,99 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/scott-diprose/dp-metadata",
+  "type": "object",
   "title": "dp-metadata",
-  "description": "Standard description of processes within a data pipeline. This schema definition aims at providing a standard metadata data structure for defining how the schema of an origin data model is mapped to the schema of a target data model. Enabling loose coupling of a selected tool in the tool-chain used in a data integration implementation.",
+  "description": "Standard description of processes within a data pipeline. Enabling loose coupling in the tool-chain of any selected compliant tool to provide a data integration implementation.",
+  "required": [
+    "dataSetMapping"
+  ],
+  "properties": {
+    "dataSetMapping": {
+      "$ref": "#/definitions/dataSetMapping"
+    }
+  },
   "definitions": {
-    "ColumnDefinition": {
-      "description": "Describes an individual data element available in a data set.",
+    "dataStore": {
+      "$id": "#/definitions/dataStore",
       "type": "object",
+      "title": "",
+      "description": "",
+      "required": [
+        "connectionKey"
+      ],
       "properties": {
-        "column_name": {
+        "connectionKey": {
+          "$id": "#/definitions/dataStore/properties/connectionKey",
+          "type": "string",
+          "title": "The Connectionkey Schema",
+          "examples": [
+            "HSTG"
+          ]
+        },
+        "connectionMethod": {
+          "$id": "#/definitions/dataStore/properties/connectionMethod",
+          "type": "string",
+          "title": "Optionally identify a possible connection mechanism by which to connect to a data store.",
+          "examples": [
+            "MYSQL_OLEDB"
+          ]
+        },
+        "connectionString": {
+          "$id": "#/definitions/dataStore/properties/connectionString",
+          "type": "string",
+          "title": "Optionally store the details on how to connect to a data store.",
+          "examples": [
+            "Provider=MYSQL;Innitial Catalog=egdb;"
+          ]
+        }
+      },
+      "dependencies": {
+        "connectionString": [
+          "connectionMethod"
+        ]
+      },
+      "additionalProperties": true
+    },
+    "dataModelMapping": {
+      "title": "TODO",
+      "description": "Aims at providing a standard metadata data structure for defining how the schema of an origin data model is mapped to the schema of a target data model."
+    },
+    "columnDefinition": {
+      "$id": "#/definitions/columnDefinition",
+      "type": "object",
+      "title": "",
+      "description": "Describes an individual data element, or column, which is available within a data set.",
+      "required": [
+        "columnName"
+      ],
+      "properties": {
+        "columnName": {
           "description": "Unique name which identifies the column.",
           "type": "string"
         },
-        "data_type": {
+        "dataType": {
           "description": "Text label of the data type, including precision or max length.",
           "type": "string"
         },
-        "max_length": {
-          "description": "TODO: determine if this is required",
+        "maxLength": {
+          "description": "Quantifies the storage requirement.",
           "type": "integer"
         },
         "precision": {
-          "description": "TODO: determine if this is required",
+          "description": "Quantifies how much of the storage is used for whole number accuracy.",
           "type": "integer"
         },
         "scale": {
-          "description": "TODO: determine if this is required",
+          "description": "Quantifies how much of the storage is used for decimal accuracy.",
           "type": "integer"
-        },
-        "extension": {
-          "description": "Extention point for adding custom properties for specific implementations or plugin libraries.",
-          "type": "array",
-          "items": {
-            "type": "object"
-          },
-          "minItems": 0,
-          "uniqueItems": true
         }
       },
-      "required": [
-        "column_name"
-      ],
       "dependencies": {
-        "max_length": [
-          "data_type"
+        "maxLength": [
+          "dataType"
         ],
         "precision": [
-          "data_type"
+          "dataType"
         ],
         "scale": [
           "precision"
@@ -53,153 +101,310 @@
       },
       "additionalProperties": false
     },
-    "Transform": {
-      "description": "Where the source is a computation of functions, multiple columns, or literals.",
-      "type": [
-        "object",
-        "null"
+    "calculationDefinition": {
+      "$id": "#/definitions/calculationDefinition",
+      "type": "object",
+      "title": "",
+      "description": "",
+      "required": [
+        "columnName",
+        "language",
+        "code"
       ],
       "properties": {
-        "type": {
-          "description": "Currently restricted to options supported by library. This needs to be relaxed once introduce plug-ins.",
+        "columnName": {
           "type": "string",
-          "enum": [
-            "SQL Expression"
+          "title": "",
+          "description": "Unique name which identifies the resulting column.",
+          "examples": [
+            "AvgOfColumns"
+          ]
+        },
+        "language": {
+          "type": "string",
+          "title": "calculation language",
+          "description": "Identifies the language appropriate to the data store. Which the associated code block is written in.",
+          "examples": [
+            "T-SQL"
           ]
         },
         "code": {
-          "description": "The block of code to be run. Depending on the language type, this may be required to be a single statement.",
-          "type": "string"
-        },
-        "extension": {
-          "description": "Extention point for adding custom properties for specific implementations or plugin libraries.",
-          "type": "array",
-          "items": {
-            "type": "object"
-          },
-          "minItems": 0,
-          "uniqueItems": true
+          "type": "string",
+          "title": "calculation code",
+          "description": "An implementation which generates the required result in the associated language.",
+          "examples": [
+            "(column1 + column2) / 2"
+          ]
         }
-      },
-      "required": [
-        "type",
-        "code"
-      ],
-      "additionalProperties": false
+      }
     },
-    "MappedObject": {
-      "description": "Identifies a database object which represents a data set. When represents a source, then may be read only. When represents a target, then must be writable.",
+    "dataItem": {
       "type": "object",
+      "$id": "#/definitions/dataItem",
+      "title": "",
+      "description": "",
       "properties": {
-        "connection_key": {
-          "description": "Required. The unique identifier of a centrally managed connection to a data store.",
-          "type": "string"
+        "dataItemType": {
+          "type": "string",
+          "title": "",
+          "default": "dataColumn",
+          "enum": [
+            "dataObject",
+            "dataQuery"
+          ]
         },
-        "object_schema": {
-          "description": "Optional. Namespace, owner, or security context of the datastore",
-          "type": "string"
+        "dataObject": {
+          "$ref": "#/definitions/dataObject"
         },
-        "object_name": {
-          "description": "Required. Unique identifier of the datastore.",
-          "type": "string"
-        },
-        "key_columns": {
-          "description": "Optional. Columns which make up the key of the dataset.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ColumnDefinition"
-          }
-        },
-        "extension": {
-          "description": "Extention point for adding custom properties for specific implementations or plugin libraries.",
-          "type": "array",
-          "items": {
-            "type": "object"
-          },
-          "minItems": 0,
-          "uniqueItems": true
+        "dataQuery": {
+          "$ref": "#/definitions/dataQuery"
         }
       },
       "required": [
-        "connection_key",
-        "object_name"
+        "dataSetType"
       ],
-      "additionalProperties": false
-    }
-  },
-  "type": "object",
-  "properties": {
-    "source": {
-      "$ref": "#/definitions/MappedObject"
-    },
-    "target": {
-      "$ref": "#/definitions/MappedObject"
-    },
-    "mapped_columns": {
-      "description": "This describes which target columns are to be populated, and from which source data or transform. It is not required to populate all target columns, nor use all source columns.",
-      "type": "array",
-      "items": {
-        "description": "mapping",
-        "type": "object",
-        "oneOf": [
-          {
-            "properties": {
-              "source": {
-                "$ref": "#/definitions/ColumnDefinition"
-              },
-              "target": {
-                "$ref": "#/definitions/ColumnDefinition"
-              }
-            },
-            "required": [
-              "source",
-              "target"
-            ],
-            "additionalProperties": false
-          },
-          {
-            "properties": {
-              "transform": {
-                "$ref": "#/definitions/Transform"
-              },
-              "target": {
-                "$ref": "#/definitions/ColumnDefinition"
-              }
-            },
-            "required": [
-              "transform",
-              "target"
-            ],
-            "additionalProperties": false
-          }
+      "oneOf": [
+        {
+          "required": [
+            "dataObject"
+          ]
+        },
+        {
+          "required": [
+            "dataQuery"
+          ]
+        }
+      ],
+      "not": {
+        "required": [
+          "dataObject",
+          "dataQuery"
         ]
       },
-      "minItems": 1,
-      "uniqueItems": true
+      "additionalProperties": false
     },
-    "ignore_on_refresh": {
-      "description": "Lists columns explicitly excluded from the mapping. For use cases where it is usefull to be able to destinguish purposefully skipped columns from newly added columns.",
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ColumnDefinition"
-      },
-      "minItems": 0,
-      "uniqueItems": true
+    "dataQuery": {
+      "$id": "#/definitions/dataQuery",
+      "type": "object",
+      "title": "",
+      "required": [
+        "language",
+        "code"
+      ],
+      "properties": {
+        "language": {
+          "$id": "#/properties/dataObjectMapping/properties/source/properties/dataObject/properties/language",
+          "type": "string",
+          "title": "query language",
+          "description": "Identifies the language appropriate to the data store. Which the associated code block is written in.",
+          "examples": [
+            "T-SQL"
+          ]
+        },
+        "code": {
+          "$id": "#/properties/dataObjectMapping/properties/source/properties/dataObject/properties/code",
+          "type": "string",
+          "title": "query implementation",
+          "description": "An implementation which returns the required result set, in the associated language.",
+          "examples": [
+            "select column1, column2 from table1;"
+          ]
+        },
+        "columns": {
+          "type": "array",
+          "title": "query columns",
+          "description": "Optional detail of the columns returned within the resulting data set.",
+          "items": {
+            "$ref": "#/definitions/columnDefinition",
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        }
+      }
     },
-    "extension": {
-      "description": "Extention point for adding custom properties for specific implementations or plugin libraries.",
-      "type": "array",
-      "items": {
-        "type": "object"
+    "dataObject": {
+      "$id": "#/definitions/dataObject",
+      "type": "object",
+      "title": "",
+      "description": "",
+      "required": [
+        "objectName"
+      ],
+      "properties": {
+        "objectSchema": {
+          "type": "string",
+          "title": "",
+          "description": "The name of the object's containing schema in the data store.",
+          "examples": [
+            "dbo"
+          ]
+        },
+        "objectName": {
+          "type": "string",
+          "title": "",
+          "description": "The object's identifying name in the data store.",
+          "examples": [
+            "LineItemAmount"
+          ]
+        },
+        "columns": {
+          "type": "array",
+          "title": "object columns",
+          "description": "Optional detail of the columns contained within the specified data object.",
+          "items": {
+            "$ref": "#/definitions/columnDefinition",
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        }
       },
-      "minItems": 0,
-      "uniqueItems": true
+      "additionalProperties": true
+    },
+    "dataSet": {
+      "type": "object",
+      "$id": "#/definitions/dataSet",
+      "title": "",
+      "description": "",
+      "properties": {
+        "dataSetType": {
+          "type": "string",
+          "title": "",
+          "default": "dataObject",
+          "enum": [
+            "dataObject",
+            "dataQuery"
+          ]
+        },
+        "dataObject": {
+          "$ref": "#/definitions/dataObject"
+        },
+        "dataQuery": {
+          "$ref": "#/definitions/dataQuery"
+        }
+      },
+      "required": [
+        "dataSetType"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "dataObject"
+          ]
+        },
+        {
+          "required": [
+            "dataQuery"
+          ]
+        }
+      ],
+      "not": {
+        "required": [
+          "dataObject",
+          "dataQuery"
+        ]
+      },
+      "additionalProperties": false
+    },
+    "dataSetMapping": {
+      "$id": "#/properties/dataSetMapping",
+      "type": "object",
+      "title": "mapping between two data models",
+      "description": "Describes a basic mapping between data models. There should be sufficient detail that at least a minimal data pipeline can be constructed to move data between the two referenced models.",
+      "required": [
+        "source",
+        "target",
+        "mappedDataItems"
+      ],
+      "properties": {
+        "mappingName": {
+          "$id": "#/properties/dataSetMapping/properties/mappingName",
+          "type": "string",
+          "title": "A general name which identifies this mapping. It may, or may not, be used as the name of a generated component. It may be that an extention to this schema stores its own name for the components generated.",
+          "examples": [
+            "module_SRCSYS_Sale_Component_SAT_Sale_Line_Item"
+          ]
+        },
+        "extension": {
+          "description": "Extention point for adding custom properties for specific implementations or plugin libraries.",
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "source": {
+          "$id": "#/properties/dataSetMapping/properties/source",
+          "type": "object",
+          "title": "Identifies the data storage which from which to obtain the source data set.",
+          "required": [
+            "dataStore",
+            "dataSet"
+          ],
+          "properties": {
+            "dataStore": {
+              "$ref": "#/definitions/dataStore",
+              "title": "source data store"
+            },
+            "dataSet": {
+              "$ref": "#/definitions/dataSet",
+              "title": "source data set"
+            }
+          }
+        },
+        "target": {
+          "$id": "#/properties/dataSetMapping/properties/target",
+          "type": "object",
+          "title": "Identifies the data storage which to which the source data set will be transferred.",
+          "required": [
+            "dataStore",
+            "dataObject"
+          ],
+          "properties": {
+            "dataStore": {
+              "$ref": "#/definitions/dataStore",
+              "title": "target data store"
+            },
+            "dataObject": {
+              "$ref": "#/definitions/dataObject",
+              "title": "destination data object"
+            }
+          }
+        },
+        "mappedDataItems": {
+          "$id": "#/properties/dataSetMapping/properties/mappedDataItems",
+          "type": "array",
+          "title": "",
+          "description": "It is not expected that all columns in the source data set, nor all columns in the target object are included in the mapping.",
+          "items": {
+            "$id": "#/properties/dataSetMapping/properties/mappedDataItems/items",
+            "type": "object",
+            "title": "",
+            "required": [
+              "sourceDataItem",
+              "targetDataItem"
+            ],
+            "properties": {
+              "sourceDataItem": {
+                "$id": "#/properties/mappdedDataItems/items/properties/sourceDataItem",
+                "$ref": "#/definitions/dataItem",
+                "title": "data element mapped from in the source",
+                "examples": [
+                  "SaleAmount"
+                ]
+              },
+              "targetDataItem": {
+                "$id": "#/properties/mappdedDataItems/items/properties/targetDataItem",
+                "$ref": "#/definitions/dataItem",
+                "title": "data element mapped to in the destination",
+                "examples": [
+                  "LineItemAmount"
+                ]
+              }
+            }
+          }
+        }
+      }
     }
-  },
-  "required": [
-    "source",
-    "target",
-    "mapped_columns"
-  ],
-  "additionalProperties": false
+  }
 }
