@@ -54,7 +54,7 @@
       },
       "additionalProperties": true
     },
-    "dataModelMapping": {
+    "dataModel": {
       "title": "TODO",
       "description": "Aims at providing a standard metadata data structure for defining how the schema of an origin data model is mapped to the schema of a target data model."
     },
