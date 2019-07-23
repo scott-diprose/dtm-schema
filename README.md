@@ -1,3 +1,5 @@
+2019-07-23: deleted old repository, forked from Scott Diprose, and merged content into repository again to persist similar developments. Some watch and stars were removed, but content remaints and now the fork link is visible.
+
 # ETL Generation Metadata Interface
 
 #### Intent
