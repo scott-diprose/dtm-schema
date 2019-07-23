@@ -1,0 +1,303 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/RoelantVos/ETL_Generation_Metadata_Interface_WIP",
+  "type": "object",
+  "title": "interfaceDataWarehouseAutomationMetadata",
+  "description": "Standardardised format for source-to-target mapping metadata to enable Data Warehouse Automation / ETL generation. The intent is to separate / decouple how individual software stores Data Warehouse Automation metadata and how this metadata can be exposed to other components, technologies and solutions for ETL and database structure generation.",
+ "required": [
+    "dataObjectMapping"
+  ],
+  "properties": {
+    "dataObjectMapping": {
+      "$ref": "#/definitions/dataObjectMapping"
+    }
+  },
+  "definitions": {
+    "code": {
+      "$id": "#/definitions/code",
+      "type": "object",
+      "title": "",
+      "description": "A code block (e.g. SQL) as definition of a data set or element.",
+      "required": [
+        "codeBlock"
+      ],
+      "properties": {
+        "language": {
+          "description": "Optional. Language the code was written in.",
+          "type": "string"
+        },
+        "codeBlock": {
+          "description": "Mandatory. The code itself.",
+          "type": "string"
+        }
+      }
+    },
+    "dataStore": {
+      "$id": "#/definitions/dataStore",
+      "type": "object",
+      "title": "DataStore",
+      "description": "Connectivity details - a Data Store is where a Data Object is located.",
+      "required": [
+        "connectionKey"
+      ],
+      "properties": {
+        "connectionKey": {
+          "$id": "#/definitions/dataStore/properties/connectionKey",
+          "type": "string",
+          "title": "",
+          "description": "Optional. Token / label to indicate an existing connection.",
+          "examples": [
+            "PSA"
+          ]
+        },
+        "connectionMethod": {
+          "$id": "#/definitions/dataStore/properties/connectionMethod",
+          "type": "string",
+          "title": "",
+          "examples": [
+            "OLEDB"
+          ]
+        },
+        "connectionString": {
+          "$id": "#/definitions/dataStore/properties/connectionString",
+          "type": "string",
+          "title": "Optional. Connection string used to connect to the target.",
+          "examples": [
+            "Provider=;Initial Catalog=;"
+          ]
+        }
+      }
+    },
+    "dataObject": {
+      "description": "Any kind of entity, i.e. data set, SQL query, object, file or table.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Mandatory unique name of the file/table.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Optional classification of the object (query, file, table).",
+          "type": "string"
+        },
+        "businessKey": {
+          "description": "The (business) key that defines a data object.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/businessKey"
+          }
+        },
+        "dataItems": {
+          "description": "Elements that define the dataset.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dataItem"
+          }
+        },
+        "code": {
+          "description": "Definition of a data object as (output of) code.",
+          "$ref": "#/definitions/code"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "columnDefinition": {
+      "$id": "#/definitions/columnDefinition",
+      "type": "object",
+      "title": "",
+      "description": "A column, attribute or item in a Data Object.",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "description": "Unique name which identifies the column / attribute.",
+          "type": "string"
+        },
+        "dataType": {
+          "description": "Optional. Label of the data type",
+          "type": "string"
+        },
+        "characterLength": {
+          "description": "Optional. Length of the item in case it is text.",
+          "type": "integer"
+        },
+        "numericPrecision": {
+          "description": "The number of digits in a numeric value (number).",
+          "type": "integer"
+        },
+        "numericScale": {
+          "description": "The number of digits to the right of the decimal point.",
+          "type": "integer"
+        },
+        "ordinalPosition": {
+          "description": "Optional. The position of items in the data object.",
+          "type": "integer"
+        },
+        "isPrimaryKey": {
+          "description": "Boolean value indicating if the item is a Primary Key.",
+          "type": "boolean"
+        }
+      }
+    },
+    "calculationDefinition": {
+      "$id": "#/definitions/calculationDefinition",
+      "type": "object",
+      "title": "",
+      "description": "",
+      "required": [
+        "calculationCode"
+      ],
+      "properties": {
+        "calculationName": {
+          "type": "string",
+          "title": "",
+          "description": "Unique name which identifies the target column.",
+          "examples": [
+            "AvgOfColumns"
+          ]
+        },
+        "calculationCode": {
+          "title": "Calculation code",
+          "description": "",
+          "examples": [
+            "(column1 + column2) / 2"
+          ],
+          "$ref": "#/definitions/code"
+        }
+      }
+    },
+    "dataItem": {
+      "$id": "#/definitions/dataItem",
+      "title": "Either a Column Definition or straight-up code",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/columnDefinition"
+        },
+        {
+          "$ref": "#/definitions/code"
+        }
+      ]
+    },
+    "businessKey": {
+      "description": "The generic definition of a business key.",
+      "required": [
+        "businessKeyComponents"
+      ],
+      "type": "object",
+      "properties": {
+        "businessKeyComponentBehaviour": {
+          "description": "Specification of what to do with the Business Key.",
+          "type": "string"
+        },
+        "businessKeyComponents": {
+          "description": "Items that define the Business Key.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dataItem"
+          }
+        }
+      }
+    },
+    "dataObjectMapping": {
+      "$id": "#/properties/dataObjectMapping",
+      "type": "object",
+      "title": "",
+      "description": "Source-to-target mapping between Data Objects",
+      "required": [
+        "source",
+        "target",
+        "mappedDataItems"
+      ],
+      "properties": {
+        "mappingName": {
+          "$id": "#/properties/dataObjectMapping/properties/mappingName",
+          "type": "string",
+          "title": "A general name which identifies this mapping.",
+          "examples": [
+            "m_100_STG_PROFILER_CUSTOMER_HUB_CUSTOMER"
+          ]
+        },
+        "source": {
+          "$id": "#/properties/dataObjectMapping/properties/source",
+          "title": "Source of the source-to-target mapping",
+          "description": "The source object of the mapping.",
+          "required": [
+            "dataObject"
+          ],
+          "properties": {
+            "dataStore": {
+              "$ref": "#/definitions/dataStore",
+              "title": "Source data store"
+            },
+            "dataObject": {
+              "$ref": "#/definitions/dataObject",
+              "title": "Source data object"
+            }
+          }
+        },
+        "target": {
+          "$id": "#/properties/properties/target",
+          "title": "Target of the source-to-target mapping",
+          "description": "The Target object of the mapping.",
+          "required": [
+            "dataObject"
+          ],
+          "properties": {
+            "dataStore": {
+              "$ref": "#/definitions/dataStore",
+              "title": "Target data store"
+            },
+            "dataObject": {
+              "$ref": "#/definitions/dataObject",
+              "title": "Target data object"
+            }
+          }
+        },
+        "filter": {
+          "description": "Any filter that needs to be applied to the mapping.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "An indicator to set the mapping as active / enabled or not.",
+          "type": "boolean"
+        },
+        "description": {
+          "description": "Description or classification for the mapping (free form).",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "mappedDataItems": {
+          "$id": "#/properties/dataObjectMapping/properties/mappedDataItems",
+          "title": "",
+          "description": "The collection of column-to-column mappings",
+          "type": "array",
+          "items": {
+            "description": "Individual item mappings",
+            "type": "object",
+            "required": [
+              "sourceDataItem",
+              "targetDataItem"
+            ],
+            "properties": {
+              "sourceDataItem": {
+                "$ref": "#/definitions/dataItem"
+              },
+              "targetDataItem": {
+                "$ref": "#/definitions/dataItem"
+              }
+            }
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "dataObjectMapping": {
+    "mappingName" : "STG_PROFILER_OFFER_HUB_INCENTIVE_OFFER",
+    "source": {
+       "dataObject" : {
+         "name" : "STG_PROFILER_OFFER"
+       }
+    },
+    "target" : {
+       "dataObject" : {
+         "name" : "HUB_INCENTIVE_OFFER"
+       }
+    },
+     "mappedDataItems": [
+        {
+          "sourceDataItem": {"name": "OfferId"},
+          "targetDataItem": {"name": "OFFER_ID"
+          }
+        },
+        {
+          "sourceDataItem": {"name": "Offer_Long_Description"},
+          "targetDataItem": {"name": "OFFER_DESCRIPTION"}
+        }
+      ]
+  }
+}
