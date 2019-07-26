@@ -1,7 +1,2 @@
 *.bak
 *.zip
-spec/archive
-schemas/example_extensions
-test
-schemas/dp-metadata.orig.json
-schemas/dp-metadata.multi-type.json
