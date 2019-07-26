@@ -1,7 +1,7 @@
 # dp-metadata
 
-Metadata to describes processes within a data pipeline.
-
+Object model for standardising the structure of metadata used to describe the processes within a data pipelines.
+The intention is to enable loose coupling between tools or components. Allowing for the construction of pipelines using compliant tools, without lock-in to a specific tool set.
 The canonical model is provided as a JSON Schema.
 
 ## WIP
@@ -16,4 +16,3 @@ At the moment specific extension points have been set for inclusion of additiona
 
 
 Individual work can begin as an extension. Then once fleshed out with working examples, can be discussed as to it inclusion, or part thereof, into the core schema.
-
