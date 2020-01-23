@@ -4,15 +4,14 @@ Object model for standardising the structure of metadata used to describe the pr
 The intention is to enable loose coupling between tools or components. Allowing for the construction of pipelines using compliant tools, without lock-in to a specific tool set.
 The canonical model is provided as a JSON Schema.
 
-## WIP
+The intention is not to define a standard toolset. Rather to define a standard schema for the metadata which serves as input to a variety of  tools that can be used for building and running data pipelines. This standardisation is expected to enable better interoperability between disparate tools, whilst also assisting in preventing vendor lock-in.
 
-At the moment only the schema for mapping data between data models/stores has been added, and so is marked as mandatory in the root schema. As other useful metadata is identified and modelled. Then this will not continue to be the case, and the root schema will only hold optional objects as root elements for each type.
+Also under development. Checkout the [Data Processing Metadata Library (DPMLib)](https://github.com/scott-diprose/DPMLib.net). Which provides a core set of functionality to enable quickly intergrating metadata into your own pipelines.
 
+---
 
-The intention is not to define a standard toolset. Rather define a standard schema for the data which serves as input to a variety of  tools that can be used for data pipelines. This standardisation should enable better interoperability between disparate tools, and assist in preventing vendor lock-in.
+The next revision will be looking at separating the intent from implementation. Where will be looking at adding an additional templating library to generate any specific implementation code from the captured intent. 
 
-
-At the moment specific extension points have been set for inclusion of additional data beyond the core schema. This is intended to promote clarity in identifying which data belongs to what extension.
-
-
-Individual work can begin as an extension. Then once fleshed out with working examples, can be discussed as to it inclusion, or part thereof, into the core schema.
+Comming up: 
+- An additional library and CLI which applys Handlebars templates based on the DPMLib to produce specific implementations of a pipeline.
+- Example pipelines for various technologies.
