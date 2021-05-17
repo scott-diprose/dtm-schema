@@ -1,3 +1,8 @@
+
+
+https://stackoverflow.com/questions/54349286/yaml-use-mapped-list-vs-array
+
+
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/scott-diprose/dp-metadata",
